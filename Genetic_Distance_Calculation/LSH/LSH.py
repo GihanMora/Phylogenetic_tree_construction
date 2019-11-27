@@ -4,24 +4,30 @@ from datasketch.minhash import MinHash
 import concurrent.futures
 import ast
 
-from functools import reduce
+
+# path of the folder that includes DNA sequences
 filePath = "test_genome/"
+
+# length of a splitted DNA sequence of a specie
 splitValue = 200000
+
+# number of hash values for a given sequence for min-hashing
 minHashPermmutations = 10
 
 fileNameArray = []
-
-
-
 dnaMinHashes = []
 
 
+# to get jaccard similarity between two species
+# list1 - min-hash values of specie1
+# list2 - min-hash values of specie2
 def jaccard_similarity(list1, list2):
     intersection = len(list(set(list1).intersection(list2)))
     union = (len(list1) + len(list2)) - intersection
     return float(intersection / union)
 
-
+# to get the min-hash
+# splitedString - string that need to be min-hashed
 def minHashing(splitedString):
     shringleLength = 5
     startIndex = 0
@@ -33,6 +39,9 @@ def minHashing(splitedString):
 
     return m1.hashvalues
 
+
+# to get the LSH similarity of a specie with all the other species
+# filename - name of the specie
 def LSH(filename):
 
     print ("task started "+ filename);
@@ -87,6 +96,7 @@ def main():
 
     print(fileNameArray)
 
+    # use a thread pool to get the LSH similarity
     with concurrent.futures.ProcessPoolExecutor(4) as executor:
         for filename, minhashArray in zip(fileNameArray, executor.map(LSH, fileNameArray)):
 
