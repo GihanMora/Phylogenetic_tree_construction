@@ -13,10 +13,10 @@ in _startup.properties_ to __DNA_Sequences__ folder path and
 __DSK_results__ folder path.
 
 5.	Run kmer_listing.sh file using
-
-        ```
-        sh kmer_listing.sh
-        ```
+      ```
+      sh kmer_listing.sh
+      ```
+      
 6.	Now you get outputs of DKS tool in __DSK_results__ folder.
 
 ## Kmer forest comparison
