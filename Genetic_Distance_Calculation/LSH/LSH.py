@@ -114,7 +114,7 @@ def main():
             f_item_j = ast.literal_eval(f1[j])
             print("jaccard similarity between "+ f_item_i[0] +" and " + f_item_j[0] +"is : " ,jaccard_similarity(f_item_i[1], f_item_j[1]))
             f = open('compareResult.txt', 'a+')
-            f.writelines("%s\n" % ("jaccard similarity between "+ f_item_i[0] +" and " + f_item_j[0] +"is : " + str(jaccard_similarity(f_item_i[1], f_item_j[1]))) )
+            f.writelines("%s\n" % (""+ f_item_i[0] +"," + f_item_j[0] +"," + str(jaccard_similarity(f_item_i[1], f_item_j[1]))) )
             f.close()
 
     print ("time for comparing = ", time.time()-comparingStartTime)
