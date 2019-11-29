@@ -94,7 +94,9 @@ for each_CSV_file in CSVFileList:
     time2 = datetime.datetime.now()
     time2 = datetime.datetime.now()
     print("forest construction finished : "+str(time2-time1))
-
+    txt_f = open("kmer_forests/" + specie_name + ".txt", 'w+')
+    txt_f.write(str(dict))
+    txt_f.close()
     all_dicts.append(dict)
 
     count = 0

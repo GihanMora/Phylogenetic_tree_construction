@@ -30,3 +30,28 @@ to path of __CSV_results__ folder path.
 
 3.	Run _kmer_distance_calculation.py_ and a text file 
 will be created with results.
+
+4. Created kmer forests can be found in the kmer_forests folder
+
+## Feature Extraction for Neural Network
+
+
+1.	Open up the feature_extraction.py script in neumerical_NN folder. Change the variables
+kmer_forests_path to the path where kmer forests stored. Change the extracted_features_path to where you want to store extracted features. Run the script.
+Level wise ACTG count will be extracted.
+
+## Adding new specie to existing phylogenetic tree
+
+1.	Get the feature vectors of existing species of
+ phylogenetic tree + the new specie 
+and create a csv file containing features similar 
+to the _Training_Data.csv_ file. You might required
+to make kmer_forest for new specie. To extract 
+features can refer __Feature Extraction for Neural 
+Network__ section.
+
+2.	With this features make prediction set. 
+Rows of this prediction set should contain features(aka difference vectors) of new specie against all existing species.
+
+3.	Give that to NN and it will predict the distances between existing specie and other species in the tree. Pick the neighbour
+ with max similarity and plug new specie to there.
