@@ -55,3 +55,27 @@ for each in prediction:
 nearest_neighbour = Existing_species[predited_similarities.index(max(predited_similarities))]
 
 print("Nearest Neighbour for the new specie",New_specie," is ",nearest_neighbour)
+
+
+
+# tree updation visualization
+with open('updated_tree.json') as f:
+  data = json.load(f)
+
+# print data;
+parent = {}
+def find_nn(data,parent,nearest_neighbour):
+  # print data['name']
+  if(data['name']==nearest_neighbour):
+    print ("found")
+    data['children'] = [{'name': nearest_neighbour},{'name':New_specie}]
+    data['name'] = parent['name'] + '1'
+  else:
+    if('children' in data.keys()):
+      find_nn(data['children'][0],data,nearest_neighbour)
+      find_nn(data['children'][1],data, nearest_neighbour)
+
+
+find_nn(data,{},nearest_neighbour)
+with open('updated_tree.json', 'w') as outfile:
+  json.dump(data, outfile)
