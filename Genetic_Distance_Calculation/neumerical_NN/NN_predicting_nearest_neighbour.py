@@ -22,6 +22,9 @@ train_X = normed_train_data.drop('kmerSimilarity', axis=1).values
 train_Y = normed_train_data['kmerSimilarity'].values
 
 X_train, X_test, y_train, y_test = train_test_split(train_X,train_Y,test_size=0.001)
+
+
+print(type(X_test))
 #random_state=6,21,8
 # testData_with_names = pd.read_csv('testDatasetDeleted60_nonames.csv')
 
@@ -75,10 +78,21 @@ print("evaluate")
 results = model.evaluate(X_test,y_test)
 print(results)
 
-# to_predict = pd.read_csv('TrainingdatasetDeleted.csv')
+
+model_json = model.to_json()
+with open ('model.json','w') as json_file:
+    json_file.write(model_json)
+model.save_weights("model.h5")
+print("Saved model to disk")
+
 
 
 prediction = model.predict(X_test)
+print(prediction)
+
+
+
+
 
 predictionArray=[]
 
