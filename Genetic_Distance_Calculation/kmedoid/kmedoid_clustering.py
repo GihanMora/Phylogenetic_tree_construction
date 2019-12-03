@@ -125,5 +125,5 @@ elapsed_time = datetime.datetime.now() - time
 # Milliseconds
 print("Elapsed Time in Mili sec :" , elapsed_time.total_seconds()*1000)
 print(parentDict)
-with open('sex.json','w') as outfile:
+with open('created_tree.json','w') as outfile:
     json.dump(parentDict,outfile)
