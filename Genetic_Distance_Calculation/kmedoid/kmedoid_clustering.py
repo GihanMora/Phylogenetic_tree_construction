@@ -5,30 +5,12 @@ import json
 from Genetic_Distance_Calculation.kmedoid.k_medioid import kMedoids
 from Genetic_Distance_Calculation.kmedoid.k_mer_to_distance_matrix import distanceMatrixGenerator
 
-file_Path = "/home/castle/repo/Phylogenetic_tree_construction/" \
-            "Genetic_Distance_Calculation/kmedoid/kmer_result.txt"
+file_Path = "/home/castle/Desktop/Phylogenetic_tree_construction/Genetic_Distance_Calculation/kmer/kmer_similarity.txt"
 
 data = distanceMatrixGenerator(file_Path)
 data_label, distance_matrix = data[0], np.array(data[1])
 
 data_label_copy = data[0].copy()
-# data_label = ['A', 'B', 'C',
-#               'D', 'E', 'F' ,
-#               'G' , 'H' , 'I']
-#
-# give distance matrix directly
-# distance_matrix = np.array(
-# [[0,0.010432221, 0.009252988, 0.016038109, 0.015792664, 0.015261977, 0.009469802,0.012129147,0.00933882],
-#                             [0.010432221, 0, 0.113680194, 0.159966678, 0.169917354, 0.138121955,0.182687492,0.111979141,0.183083489],
-#                             [0.009252988, 0.113680194, 0, 0.144963997, 0.158541919, 0.165510453,0.09513175,0.088293459,0.094672827],
-#                             [0.016038109, 0.159966678, 0.144963997, 0, 0.340560852, 0.301574262,0.167131109,0.113547955,0.165263827],
-#                             [0.015792664, 0.169917354, 0.158541919, 0.340560852, 0,0.344552414, 0.197706153,0.124429955,0.19602953],
-#                             [0.015261977, 0.138121955, 0.165510453, 0.301574262, 0.344552414, 0,0.196467151,0.12391129,0.196342867],
-#                             [0.009469802, 0.182687492, 0.09513175, 0.167131109, 0.344552414, 0.196467151,0,0.124647914,0.548456843],
-#                             [0.124647914, 0.12391129, 0.124429955, 0.113547955, 0.088293459, 0.111979141,0.012129147,0,0.124342619],
-#                             [0.00933882, 0.010432221, 0.094672827, 0.165263827, 0.19602953, 0.196342867,0.548456843,0.124342619,0]
-#                             ]
-# )
 
 for i in range(0,5):
     for j in range(0,5):

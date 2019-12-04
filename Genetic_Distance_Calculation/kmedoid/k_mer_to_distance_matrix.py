@@ -1,8 +1,3 @@
-# file_path = "C:\\Users\\Gimo\\Desktop\\K-mediod\\kmer_result.txt"
-#
-# file = open(file_path)
-# lines = (file.readlines())
-
 specieName = []
 distance_matrix = []
 
@@ -14,7 +9,7 @@ def searchDistance(specie_name,specie_name_2,lines):
         if ((line.split(",")[0]== specie_name and line.split(",")[1] == specie_name_2)
             or line.split(",")[0] == specie_name_2 and line.split(",")[1] == specie_name
         ):
-            return (int(line.split(",")[2].rstrip()))
+            return (float(line.split(",")[2].rstrip()))
     return specie_distance
 
 def distanceMatrixGenerator(file_path):
@@ -50,8 +45,3 @@ def distanceMatrixGenerator(file_path):
     f.close()
 
     return specieName,distance_matrix
-
-
-# print(distanceMatrixGenerator(file_path))
-
-
