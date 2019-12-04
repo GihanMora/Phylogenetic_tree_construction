@@ -2,7 +2,7 @@ import datetime
 import os
 import pandas as pd
 
-csv_file_list_path = "/home/castle/Phylogenetic_tree_construction/Genetic_Distance_Calculation/kmer/CSV_Results/"
+csv_file_list_path = "../kmer/CSV_Results/"
 
 def convert_csv_column_to_list(filename):
     dataframe = pd.DataFrame(pd.read_csv(filename))

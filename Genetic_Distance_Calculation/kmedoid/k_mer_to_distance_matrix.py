@@ -21,7 +21,7 @@ def distanceMatrixGenerator(file_path):
             if specie_n not in specieName:
                 specieName.append(specie_n)
 
-        print(specieName)
+        # print(specieName)
 
         distance_matrix = []
         for i in range(0,len(specieName)):
@@ -35,7 +35,7 @@ def distanceMatrixGenerator(file_path):
             distance_matrix.append(dis)
 
 
-        print(distance_matrix)
+        # print(distance_matrix)
 
         # Transpose
         for i in range(0,len(specieName)):

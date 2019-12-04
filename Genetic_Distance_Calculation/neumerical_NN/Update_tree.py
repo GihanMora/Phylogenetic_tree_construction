@@ -1,4 +1,6 @@
 import json
+import os
+import webbrowser
 
 import pandas as pd
 import keras.backend as K
@@ -59,7 +61,7 @@ print("Nearest Neighbour for the new specie",New_specie," is ",nearest_neighbour
 
 
 # tree updation visualization
-with open('updated_tree.json') as f:
+with open('../kmedoid/kmer_tree.json') as f:
   data = json.load(f)
 
 # print data;
@@ -69,7 +71,7 @@ def find_nn(data,parent,nearest_neighbour):
   if(data['name']==nearest_neighbour):
     print ("found")
     data['children'] = [{'name': nearest_neighbour},{'name':New_specie}]
-    data['name'] = parent['name'] + '1'
+    data['name'] = ''
   else:
     if('children' in data.keys()):
       find_nn(data['children'][0],data,nearest_neighbour)
@@ -79,3 +81,6 @@ def find_nn(data,parent,nearest_neighbour):
 find_nn(data,{},nearest_neighbour)
 with open('updated_tree.json', 'w') as outfile:
   json.dump(data, outfile)
+
+filename = os.getcwd()+'/' + 'Updated_Tree_visualization.html'
+webbrowser.open_new_tab(filename)
