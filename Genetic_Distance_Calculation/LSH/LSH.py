@@ -4,30 +4,27 @@ from datasketch.minhash import MinHash
 import concurrent.futures
 import ast
 
-
-# path of the folder that includes DNA sequences
-filePath = "test_genome/"
-
-# length of a splitted DNA sequence of a specie
+from functools import reduce
+filePath = "DNA_Sequences/"
 splitValue = 200000
-
-# number of hash values for a given sequence for min-hashing
 minHashPermmutations = 10
 
 fileNameArray = []
+
+
+
 dnaMinHashes = []
 
 
-# to get jaccard similarity between two species
-# list1 - min-hash values of specie1
-# list2 - min-hash values of specie2
 def jaccard_similarity(list1, list2):
-    intersection = len(list(set(list1).intersection(list2)))
-    union = (len(list1) + len(list2)) - intersection
-    return float(intersection / union)
+    intersection = len(list(set(list1).intersection(set(list2))))
+    union = len(set(list1).union(set(list2)))
+    if(union == 0):
+        return 0.0;
+    else:
+        return float(intersection / union)
 
-# to get the min-hash
-# splitedString - string that need to be min-hashed
+
 def minHashing(splitedString):
     shringleLength = 5
     startIndex = 0
@@ -39,9 +36,6 @@ def minHashing(splitedString):
 
     return m1.hashvalues
 
-
-# to get the LSH similarity of a specie with all the other species
-# filename - name of the specie
 def LSH(filename):
 
     print ("task started "+ filename);
@@ -96,8 +90,7 @@ def main():
 
     print(fileNameArray)
 
-    # use a thread pool to get the LSH similarity
-    with concurrent.futures.ProcessPoolExecutor(4) as executor:
+    with concurrent.futures.ProcessPoolExecutor(5) as executor:
         for filename, minhashArray in zip(fileNameArray, executor.map(LSH, fileNameArray)):
 
             dnaMinHashes.append([filename, minhashArray])
@@ -109,12 +102,12 @@ def main():
     comparingStartTime = time.time();
 
     for i in range(0,len(f1)):
-        for j in range (i+1,len(f1)):
+        for j in range (i,len(f1)):
             f_item_i = ast.literal_eval(f1[i])
             f_item_j = ast.literal_eval(f1[j])
-            print("jaccard similarity between "+ f_item_i[0] +" and " + f_item_j[0] +"is : " ,jaccard_similarity(f_item_i[1], f_item_j[1]))
-            f = open('compareResult.txt', 'a+')
-            f.writelines("%s\n" % ("jaccard similarity between "+ f_item_i[0] +" and " + f_item_j[0] +"is : " + str(jaccard_similarity(f_item_i[1], f_item_j[1]))) )
+            print("jaccard similarity between "+ f_item_i[0] +" and " + f_item_j[0] +" is : " ,jaccard_similarity(f_item_i[1], f_item_j[1]))
+            f = open('LSH_similarity.txt', 'a+')
+            f.writelines("%s\n" % (f_item_i[0][:-4] +","+ f_item_j[0][:-4]+","+ str(jaccard_similarity(f_item_i[1], f_item_j[1]))) )
             f.close()
 
     print ("time for comparing = ", time.time()-comparingStartTime)
