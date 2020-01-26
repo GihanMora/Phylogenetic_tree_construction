@@ -32,6 +32,8 @@ From this research, present a phylogenetic tree construction and updation workfl
 
 1. **Distance Calculating Stage** : Consist of genetic distance calculation method based on kmer forest construction and comparison. As the 2nd part of the distance calculation, here I used a Locality Sensitive Hashing Method for constructing genetic distances for species in different kingdoms.
 
+### K-MER based Distance Calculation Method
+
 In the first phase of the algorithm, we are  listing all distinct k-mers of each genome sequence to construct kmer forests for each of the sequences. For this purpose, we have used DSK (disk streaming of k-mers) k-mer counting software, which lists k-mers with considerable low memory and disk usage. Using algorithm 1 and algorithm 2 we have constructed the k-mer forest using k-mer lists from each species. Iterating through all the kmers of the sequence the forest is constructed, which guarantees that there is a root to leaf pathway for each distinct k-mer where each tree in the forest is k-deep. In the k-mer forest, the maximum possible number of trees for nucleotide sequence is 4 with possible A,C,T and G roots. On the other hand, if we use protein sequences instead of DNA, the number of trees became 20 as there are 20 possible roots. Using this approach it is feasible to convert hyge DNA sequence to simplified k-mer forest structure, which is more forthright to compare. In figure 1, shows an example of constructing a k-mer forest for a given sequence. 
 
 ![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/kmer-forest.png)
@@ -41,6 +43,28 @@ This is a method that based on tree pruning. In order to calculate the distance 
 Below Figure shows an example of how pruning happens. Node A (with parent C), which is indicated in Forest I is absent in Forest II. Thus, pruning occurs, and child count, which is equal to 5 is added to the distance without traversing in the circled subtree.
 
 ![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/kmer-forest-pruning.png)
+
+
+### Locality Sensitive Hashing based Distance Calculation Method
+
+Our approach consists of four major steps. As an output of this approach, it gives the pairwise similarity between DNA sequences. 
+
+	1. **Minhashing**
+
+	Minhashing is the major step of our approach which generate a signature for a given sequence by creating a minhash object which consist of minimum hash values. Within a minhash object it contains two arrays which are called hashvalue array and permutation array. Following Algorithm 1 shows the process of initiating a minhash object by initiating those arrays. Number of minimum hash values that need to be generated for sequence is denoted by the number of permutations. The permutation array is used as a parameter for random bijective permutation function which is used to update the minimum hash values. We take a mersenne prime as the upper margin of those random value. All the hash values in hashvalue array are set to maximum hash value.
+
+	2. **Partitioning mechanism**
+
+	we are introducing a partitioning mechanism to increase the accuracy of minhasing. Before calculating the minhash object for a given DNA sequence, we are dividing the DNA sequence into predefined number of partitions. Then each partition is minhashing by considering them as different sequences. After minhaashing all the partitions, we are getting set of minhash objects for single DNA sequence and each minhash object consists of constant number of minimum hash values. Because of the partitioning it is possible to achieve the approximate uniform diffusion of minimum hash values in the DNA sequence.
+
+	3. **Parallelizing Minhashing**
+
+	our next approach was  to do our main task minHash running concurrently and in parallel. Here we used modules which provides interfaces for running tasks using pool of thread. After partitioning is done each thread which is in the thread pool accupie a partition of the sequence and generate a minhash object for that particular partition and store it in a global array. When all the partitions complete by generating minhash object, it combines all the minhash objects and concatenates them to create a single minhash object for the particular DNA sequence as shown in figure 3. This approach is more efficient than generating minhash objects sequentially.
+	
+	4. **Comparing**
+
+	In this approach we obtain the Jaccard similarity[23] between the obtained DNA Minhash objects which consists of minimum hash values. The Jaccard Similarity coefficient is a statistic used for determining the similarity and diversity of sample sets. It is the coefficient where obtained by division of intersection of two samples by the union of the Sample sets as given in the following equation.
+
 
 
 2. **Tree construction stage** : Here phylogenetic tree is constructed using K-Medoid algorithm.
@@ -55,13 +79,12 @@ In here, to construct the tree we are using a modified version of the k-medoid a
 We build the neural network such that it consists of 4 layers including input layer, output layer and 2 hidden layers. In features set we used the levelwise A,C,T,G percentages of deepest 9 levels to make a difference vectors. Those vectors were in dimension of (36, 1). So we made input layer with 36 nodes. For the two hidden layers we used respectively 10 and 8 nodes by going through several iterations on avoiding underfitting and overfitting. As we wanted single output similarity value we used single output node. For each of the layers we used ReLU(rectified linear unit) activation function. As the optimizer we used Adam optimizer(Adaptive momentum estimation). For the implementation of the NN we used Neural network framework Tensorflow.
 
 
-
 In the second stage of the workflow we are using the calculated genetic distances  to construct phylogenetic trees using unsupervised machine learning method K-medoid clustering. With this we can reduce the amount of repeated work from huge amount compared to the methods such as UPGMA. Additionally it rises the accuracy as it used top down approach where it consider whole image when subdividing species. So it can be stated that this method of tree construction has  high accuracy and efficiency compared to existing methods of tree construction.
 
 The third stage of the workflow we are presenting a numerical neural network to efficiently update the phylogenetic tree by adding a new species to already constructed tree. This process does not require building the tree from the beginning in existing methods such as maximum parsimony. Here when new species encountered neural networks predict the nearest neighbor in the existing phylogenetic tree. Afterward new specie is added to the corresponding nearest neighbor.
 
 ## Results and Evaluations
 
-We construct the phylogenetic tree using our modified version of k-medoid algorithm with the help of distance matrix that we have obtained earlier. For the tree we have used 10 bacteria as our species set. The constructed phylogenetic tree is displayed below (figure 4.17)
+We construct the phylogenetic tree using our modified version of k-medoid algorithm with the help of distance matrix that we have obtained earlier. For the tree we have used 10 bacteria as our species set. The constructed phylogenetic trees is displayed below.
 
-![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/Phylogenetic-tree-accuracy-compared-to-Taxonomy(k-mer).png)
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/results.png)
