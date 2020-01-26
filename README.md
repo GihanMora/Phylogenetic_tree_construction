@@ -8,7 +8,7 @@ The tree construction method which is based on a modified version of k medoid is
 
 The phylogenetic tree (Evolutionary tree) is a branching diagram that shows the evolutionary relationships among various organisms. It branches out species by considering the similarities of them based on the genetic distance. Phylogenetic tree can be considered as one of the fundamental components of most of the bioinformatic research.
 
-![Phylogenetic-Tree-Construction](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagrams/equation.png)
+![Phylogenetic-Tree-Construction](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/phylogenetic-tree.png)
 
 
 ## Research Problem
@@ -24,9 +24,9 @@ Another major requirement of phylogenetic tree is it is required to be updated a
 As scientists are discovering a new set of species each year, phylogenetic trees are also required to be updated according to the latest findings in order to give correct information. With the above mentioned approaches, if a new genome sequence (aka new species) is added to that initial genome sequence set, it has to go back to the beginning and construct the phylogenetic tree again from zero. So, with these existing approaches updating a tree is really inefficient and consumes a considerable amount of time and resources. So, when considering the rate of discovering new species and generating phylogenetic trees relevant to them has become an exhausting duty today. These facts reflect the requirement of an efficient way of generating phylogenetic trees in a dynamic manner without changing the entire tree.
 
 
-### Methodology
+## Methodology
 
-![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagrams/methodology.png)
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/methodology.png)
 
 From this research, present a phylogenetic tree construction and updation workflow in order to address the shortcomings of existing methods. This workflow consists of 3 main stages as follows
 
