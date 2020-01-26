@@ -64,4 +64,4 @@ The third stage of the workflow we are presenting a numerical neural network to 
 
 We construct the phylogenetic tree using our modified version of k-medoid algorithm with the help of distance matrix that we have obtained earlier. For the tree we have used 10 bacteria as our species set. The constructed phylogenetic tree is displayed below (figure 4.17)
 
-![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/Phylogenetic tree accuracy compared to Taxonomy(k-mer).png)
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/Phylogenetic-tree-accuracy-compared-to-Taxonomy(k-mer).png)
