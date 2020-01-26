@@ -49,19 +49,18 @@ Below Figure shows an example of how pruning happens. Node A (with parent C), wh
 
 Our approach consists of four major steps. As an output of this approach, it gives the pairwise similarity between DNA sequences. 
 
-	1. **Minhashing**
+1. **Minhashing**
 
 	Minhashing is the major step of our approach which generate a signature for a given sequence by creating a minhash object which consist of minimum hash values. Within a minhash object it contains two arrays which are called hashvalue array and permutation array. Following Algorithm 1 shows the process of initiating a minhash object by initiating those arrays. Number of minimum hash values that need to be generated for sequence is denoted by the number of permutations. The permutation array is used as a parameter for random bijective permutation function which is used to update the minimum hash values. We take a mersenne prime as the upper margin of those random value. All the hash values in hashvalue array are set to maximum hash value.
 
-	2. **Partitioning mechanism**
+2. **Partitioning mechanism**
 
 	we are introducing a partitioning mechanism to increase the accuracy of minhasing. Before calculating the minhash object for a given DNA sequence, we are dividing the DNA sequence into predefined number of partitions. Then each partition is minhashing by considering them as different sequences. After minhaashing all the partitions, we are getting set of minhash objects for single DNA sequence and each minhash object consists of constant number of minimum hash values. Because of the partitioning it is possible to achieve the approximate uniform diffusion of minimum hash values in the DNA sequence.
-
-	3. **Parallelizing Minhashing**
+3. **Parallelizing Minhashing**
 
 	our next approach was  to do our main task minHash running concurrently and in parallel. Here we used modules which provides interfaces for running tasks using pool of thread. After partitioning is done each thread which is in the thread pool accupie a partition of the sequence and generate a minhash object for that particular partition and store it in a global array. When all the partitions complete by generating minhash object, it combines all the minhash objects and concatenates them to create a single minhash object for the particular DNA sequence as shown in figure 3. This approach is more efficient than generating minhash objects sequentially.
 	
-	4. **Comparing**
+4. **Comparing**
 
 	In this approach we obtain the Jaccard similarity[23] between the obtained DNA Minhash objects which consists of minimum hash values. The Jaccard Similarity coefficient is a statistic used for determining the similarity and diversity of sample sets. It is the coefficient where obtained by division of intersection of two samples by the union of the Sample sets as given in the following equation.
 
@@ -87,4 +86,4 @@ The third stage of the workflow we are presenting a numerical neural network to 
 
 We construct the phylogenetic tree using our modified version of k-medoid algorithm with the help of distance matrix that we have obtained earlier. For the tree we have used 10 bacteria as our species set. The constructed phylogenetic trees is displayed below.
 
-![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/results.png)
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/results.png)
