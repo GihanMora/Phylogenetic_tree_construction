@@ -32,7 +32,7 @@ From this research, present a phylogenetic tree construction and updation workfl
 
 1. **Distance Calculating Stage** : Consist of genetic distance calculation method based on kmer forest construction and comparison. As the 2nd part of the distance calculation, here I used a Locality Sensitive Hashing Method for constructing genetic distances for species in different kingdoms.
 
-In the first phase of the algorithm, we are  listing all distinct k-mers of each genome sequence to construct kmer forests for each of the sequences. For this purpose, we have used DSK (disk streaming of k-mers) k-mer counting software, which lists k-mers with considerable low memory and disk usage[32]. Using algorithm 1 and algorithm 2 we have constructed the k-mer forest using k-mer lists from each species. Iterating through all the kmers of the sequence the forest is constructed, which guarantees that there is a root to leaf pathway for each distinct k-mer where each tree in the forest is k-deep. In the k-mer forest, the maximum possible number of trees for nucleotide sequence is 4 with possible A,C,T and G roots. On the other hand, if we use protein sequences instead of DNA, the number of trees became 20 as there are 20 possible roots. Using this approach it is feasible to convert hyge DNA sequence to simplified k-mer forest structure, which is more forthright to compare. In figure 1, shows an example of constructing a k-mer forest for a given sequence. 
+In the first phase of the algorithm, we are  listing all distinct k-mers of each genome sequence to construct kmer forests for each of the sequences. For this purpose, we have used DSK (disk streaming of k-mers) k-mer counting software, which lists k-mers with considerable low memory and disk usage. Using algorithm 1 and algorithm 2 we have constructed the k-mer forest using k-mer lists from each species. Iterating through all the kmers of the sequence the forest is constructed, which guarantees that there is a root to leaf pathway for each distinct k-mer where each tree in the forest is k-deep. In the k-mer forest, the maximum possible number of trees for nucleotide sequence is 4 with possible A,C,T and G roots. On the other hand, if we use protein sequences instead of DNA, the number of trees became 20 as there are 20 possible roots. Using this approach it is feasible to convert hyge DNA sequence to simplified k-mer forest structure, which is more forthright to compare. In figure 1, shows an example of constructing a k-mer forest for a given sequence. 
 
 ![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/kmer-forest.png)
 
@@ -45,8 +45,14 @@ Below Figure shows an example of how pruning happens. Node A (with parent C), wh
 
 2. **Tree construction stage** : Here phylogenetic tree is constructed using K-Medoid algorithm.
 
+In here, to construct the tree we are using a modified version of the k-medoid algorithm. We are using 2 medoid to cluster where we use the calculated distance matrix obtained above. One distance represents a data point in the vector space. Randomly we select 2 medoids and cluster around them. Then this is recursively apply to each bucket/ cluster until there is only one data point to be clustered. 
+
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/k-medioid.png)
+
 
 3. **Tree updation stage** : Consist of numerical neural network to dynamically add new species to the constructed tree.
+
+We build the neural network such that it consists of 4 layers including input layer, output layer and 2 hidden layers. In features set we used the levelwise A,C,T,G percentages of deepest 9 levels to make a difference vectors. Those vectors were in dimension of (36, 1). So we made input layer with 36 nodes. For the two hidden layers we used respectively 10 and 8 nodes by going through several iterations on avoiding underfitting and overfitting. As we wanted single output similarity value we used single output node. For each of the layers we used ReLU(rectified linear unit) activation function. As the optimizer we used Adam optimizer(Adaptive momentum estimation). For the implementation of the NN we used Neural network framework Tensorflow.
 
 
 
@@ -56,3 +62,6 @@ The third stage of the workflow we are presenting a numerical neural network to 
 
 ## Results and Evaluations
 
+We construct the phylogenetic tree using our modified version of k-medoid algorithm with the help of distance matrix that we have obtained earlier. For the tree we have used 10 bacteria as our species set. The constructed phylogenetic tree is displayed below (figure 4.17)
+
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/Phylogenetic tree accuracy compared to Taxonomy(k-mer).png)
