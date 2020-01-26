@@ -26,16 +26,33 @@ As scientists are discovering a new set of species each year, phylogenetic trees
 
 ## Methodology
 
-![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/methodology.png)
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/mehodology.png)
 
 From this research, present a phylogenetic tree construction and updation workflow in order to address the shortcomings of existing methods. This workflow consists of 3 main stages as follows
 
 1. **Distance Calculating Stage** : Consist of genetic distance calculation method based on kmer forest construction and comparison. As the 2nd part of the distance calculation, here I used a Locality Sensitive Hashing Method for constructing genetic distances for species in different kingdoms.
+
+In the first phase of the algorithm, we are  listing all distinct k-mers of each genome sequence to construct kmer forests for each of the sequences. For this purpose, we have used DSK (disk streaming of k-mers) k-mer counting software, which lists k-mers with considerable low memory and disk usage[32]. Using algorithm 1 and algorithm 2 we have constructed the k-mer forest using k-mer lists from each species. Iterating through all the kmers of the sequence the forest is constructed, which guarantees that there is a root to leaf pathway for each distinct k-mer where each tree in the forest is k-deep. In the k-mer forest, the maximum possible number of trees for nucleotide sequence is 4 with possible A,C,T and G roots. On the other hand, if we use protein sequences instead of DNA, the number of trees became 20 as there are 20 possible roots. Using this approach it is feasible to convert hyge DNA sequence to simplified k-mer forest structure, which is more forthright to compare. In figure 1, shows an example of constructing a k-mer forest for a given sequence. 
+
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/kmer-forest.png)
+
+This is a method that based on tree pruning. In order to calculate the distance between two forrest, it has to detect the k-mers which are not common between the two DNA sequence. When comparing two trees, it has to scan level by level from root node to leaf node. If any mismatch node found in scanning, all the pathways aka k-mers are counted using recursive algorithm and added to the distance. Because of not traversing to child nodes of a mismatched node, efficiency is drastically improved. Using another recursive algorithm, uncommon nodes in trees of two forests are found. If those nodes are not left one of above algorithms works and pruning occurs.    
+
+Below Figure shows an example of how pruning happens. Node A (with parent C), which is indicated in Forest I is absent in Forest II. Thus, pruning occurs, and child count, which is equal to 5 is added to the distance without traversing in the circled subtree.
+
+![Phylogenetic-Tree-Construction-methodology](https://raw.githubusercontent.com/ngimhana/Phylogenetic_tree_construction/master/Diagram/kmer-forest-pruning.png)
+
+
 2. **Tree construction stage** : Here phylogenetic tree is constructed using K-Medoid algorithm.
+
+
 3. **Tree updation stage** : Consist of numerical neural network to dynamically add new species to the constructed tree.
 
-During the first stage the usage of a novel genetic distance calculation method to get the genetic distance between species. In order to do that, building a kmer forest using the distinct kmers extracted from the raw genetic sequences. Afterwards, usage of specified tree pruning algorithm to compare those forests to get the genetic distance. From the kmer forests, represention of raw genetic sequences in very compact and informative manner. Because of the compactness of kmer forests and the pruning mechanisms it allows to very efficiently calculate the genetic distance. Addition to that as it considers both common and distinct kmer into consideration when calculating genetic distance it gives very high sensitivity compared to existing genetic distance calculation methods. 
+
 
 In the second stage of the workflow we are using the calculated genetic distances  to construct phylogenetic trees using unsupervised machine learning method K-medoid clustering. With this we can reduce the amount of repeated work from huge amount compared to the methods such as UPGMA. Additionally it rises the accuracy as it used top down approach where it consider whole image when subdividing species. So it can be stated that this method of tree construction has  high accuracy and efficiency compared to existing methods of tree construction.
 
 The third stage of the workflow we are presenting a numerical neural network to efficiently update the phylogenetic tree by adding a new species to already constructed tree. This process does not require building the tree from the beginning in existing methods such as maximum parsimony. Here when new species encountered neural networks predict the nearest neighbor in the existing phylogenetic tree. Afterward new specie is added to the corresponding nearest neighbor.
+
+## Results and Evaluations
+
