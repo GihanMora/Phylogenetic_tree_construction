@@ -55,3 +55,8 @@ Rows of this prediction set should contain features(aka difference vectors) of n
 
 3.	Give that to NN and it will predict the distances between existing specie and other species in the tree. Pick the neighbour
  with max similarity and plug new specie to there.
+ 
+ 
+* Cite the publication if you are using this to credit authors. 
+* [1]G. Gamage, N. Gimhana, A. Wickramarachchi, V. Mallawaarachchi, and I. Perera, “Alignment-free Whole Genome Comparison Using k-mer Forests,” in 2019 19th International Conference on Advances in ICT for Emerging Regions (ICTer), 2019, doi: 10.1109/icter48817.2019.9023714.
+ 
