@@ -1,3 +1,4 @@
+##Update the phylogenetic tree
 * **This section explains how to update the phylogenetic tree by adding a new specie.**
 * **For a instance, lets add new specie F to existing tree with species A,B,C,D and E**
 * **First populate the sample_sequences folder with all the sequences(including the new sequence)**
