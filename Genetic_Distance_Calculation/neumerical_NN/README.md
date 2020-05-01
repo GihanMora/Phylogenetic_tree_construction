@@ -18,6 +18,8 @@ Execute the script and ACTGcount.txt will be created which contain total ACTG fe
 *       ACTGcountFile = path of the ACTGcount.txt
 *       new_specie_file = Name of the fasta file of the new specie. Ex: F.fna
 * **Execute the script and Prediction_Data.csv will be created.**
+
+
 * **Neural model is already trained for more than 30,000 sequences and has about 85% accuracy. No need to traing again.(If requred to modify see NN_predecting_nearest_neighbour.py)
 Trained model file and its weights are avialable as model.json and model.h5**
 * **Go to Update_tree.py script and set following path values.**
