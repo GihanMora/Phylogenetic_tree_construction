@@ -9,7 +9,6 @@
 * **Go to the feature_extraction_a.py script and update 
 'kmer_forests_path' to the sample_kmer_forests folder path, 'extracted_features_path' to the extracted_features folder path.
 Execute the script and extracted_features folder will be populated with levelwise features**
-* **Construct the k-mer forests for all sequences and populate sample_kmer_forests folder**
 * **Go to the feature_extraction_b.py script and update 'filePath' with sample_sequences folders path.
 Execute the script and ACTGcount.txt will be created which contain total ACTG features.**
 * **Go to the feature_extraction_c.py script and set following path values**
